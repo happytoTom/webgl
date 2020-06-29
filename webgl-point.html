@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>webgl绘制一个点</title>
+  </head>
+  <body>
+    <canvas id="web01" height="500" width="500"></canvas>
+    <script>
+      let canvas = document.getElementById("web01");
+      let gl = canvas.getContext("webgl");
+      // 顶点着色器注意这里的\n不能省略。否则不符合语法
+      let VERTEX_SHADER = `
+         void main(){\n
+         gl_Position=vec4(0.0,0.0,1.0,1.0);\n
+         gl_PointSize=10.0;\n
+         }`;
+      // 片段（片元）着色器
+      let FRAG_SHADER = `
+         void main(){\n
+         gl_FragColor=vec4(1.0,0.0,0.0,1.0);\n
+         }`;
+      let vertex = gl.createShader(gl.VERTEX_SHADER);
+      let frag = gl.createShader(gl.FRAGMENT_SHADER);
+      gl.shaderSource(vertex, VERTEX_SHADER);
+      gl.shaderSource(frag, FRAG_SHADER);
+
+      gl.compileShader(vertex);
+      gl.compileShader(frag);
+
+      let program = gl.createProgram();
+      gl.attachShader(program, vertex);
+      gl.attachShader(program, frag);
+      gl.linkProgram(program);
+      gl.useProgram(program);
+
+      // 将clear理解为填充
+      gl.clearColor(0.0, 0.0, 0.0, 1.0);
+      // 填充颜色缓冲区
+      gl.clear(gl.COLOR_BUFFER_BIT);
+
+      gl.drawArrays(gl.POINTS, 0, 1);
+    </script>
+  </body>
+</html>

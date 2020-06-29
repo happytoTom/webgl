@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>webgl第一个DEMO</title>
+    <canvas id='web01' height="500" width="500" ></canvas>
+</head>
+<body>
+    <script>
+        let canvas = document.getElementById('web01');
+        let gl = canvas.getContext('webgl');
+        // 将clear理解为填充
+        gl.clearColor(0.1, 1.0, 1.0, 1.0);
+        // 填充颜色缓冲区
+        gl.clear(gl.COLOR_BUFFER_BIT);
+    </script>
+</body>
+</html>

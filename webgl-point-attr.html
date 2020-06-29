@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>webgl绘制一个点(attribute)</title>
+    <script src="./util/shader.js"></script>
+  </head>
+  <body>
+    <canvas id="web01" height="500" width="500"></canvas>
+    <script>
+      let canvas = document.getElementById("web01");
+      let gl = canvas.getContext("webgl");
+      let VERTEX_SHADER = `
+            attribute vec4 a_pos;\n
+            void main(){\n
+                gl_Position=a_pos;\n
+                gl_PointSize=25.0;\n
+            }`;
+      // 片段（片元）着色器
+      let FRAG_SHADER = `
+         precision lowp float;\n
+         uniform vec4 u_color;\n
+         void main(){\n
+         gl_FragColor=u_color;\n
+         }`;
+      let program = initShader(gl, VERTEX_SHADER, FRAG_SHADER);
+
+      let a_position = gl.getAttachedShaders(program, "a_pos");
+      let u_color = gl.getUniformLocation(program, "u_color");
+      gl.vertexAttrib4f(a_position, 0.0, 0.0, 1.0, 1.0);
+      gl.uniform4f(u_color, 0.0, 1.0, 0.0, 1.0);
+      gl.drawArrays(gl.POINTS, 0, 1);
+    </script>
+  </body>
+</html>
